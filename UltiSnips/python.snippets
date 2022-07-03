@@ -292,7 +292,20 @@ endglobal
 # Class & Special Method Name Snippets #
 ########################################
 
-snippet class "class with docstrings" b
+
+snippet class "class" b
+class ${1:MyClass}(${2:object}):
+	def __init__(self$4):
+		`!p
+snip.rv = ""
+snip >> 2
+args = get_args(t[4])
+write_init_body(args, t[2], snip)
+`
+		${0:${VISUAL:pass}}
+endsnippet
+
+snippet classdoc "class with docstrings" b
 class ${1:MyClass}(${2:object}):
 
 	`!p snip.rv = triple_quotes(snip)`${3:Docstring for $1. }`!p snip.rv = triple_quotes(snip)`
@@ -529,7 +542,7 @@ def ${1:fname}(`!p snip.rv = "self, " if snip.indent else ""`$2):
 	$0
 endsnippet
 
-snippet def "function with docstrings" b
+snippet defdoc "function with docstrings" b
 def ${1:function}(`!p
 if snip.indent:
 	snip.rv = 'self' + (", " if len(t[2]) else "")`${2:arg1}):
@@ -538,8 +551,12 @@ write_function_docstring(t, snip) `
 	${5:${VISUAL:pass}}
 endsnippet
 
+snippet def "function" b
+def ${1:function}(${2:arg1}):
+	${3:${VISUAL:pass}}
+endsnippet
 
-snippet defc "class method with docstrings" b
+snippet defcdoc "class method with docstrings" b
 @classmethod
 def ${1:function}(`!p
 if snip.indent:
@@ -549,8 +566,19 @@ write_function_docstring(t, snip) `
 	${5:${VISUAL:pass}}
 endsnippet
 
+snippet defc "class method" b
+@classmethod
+def ${1:function}(cls, ${2:arg1}):
+	${3:${VISUAL:pass}}
+endsnippet
 
-snippet defs "static method with docstrings" b
+snippet defs "static method" b
+@staticmethod
+def ${1:function}(${2:arg1}):
+	${3:${VISUAL:pass}}
+endsnippet
+
+snippet defsdoc "static method with docstrings" b
 @staticmethod
 def ${1:function}(${2:arg1}):
 	`!p snip.rv = triple_quotes(snip)`${4:TODO: Docstring for $1.}`!p
