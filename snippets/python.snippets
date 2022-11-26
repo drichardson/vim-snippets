@@ -204,7 +204,7 @@ snippet a=
 	self.assertEqual(${0}, ${1})
 # test function/method
 snippet test
-	def test_${1:description}(${2:`indent('.') ? 'self' : ''`}):
+	def test_${1:description}(${2}):
 		${0}
 # test case
 snippet testcase
